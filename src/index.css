@@ -1,13 +1,96 @@
-body {
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  font-family:'Nunito Sans', sans-serif;;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* LOGIN PAGE */
+
+.login{
+  border: none;
+  border-radius: 25px;
+  margin-top: 79px;
+  box-shadow:  1px 1px 20px 11px #dbb82d;
+}
+
+.login img{
+  height: 330px;
+  width: 427px;
+  padding: 23px;
+}
+
+.btn-primary{
+  background-color: #dbb82d;
+  border: none;
+  margin-bottom: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.btn-primary:hover{
+  background-color: #ead864 !important;
+}  
+
+.btn:disabled{
+  background-color: #ead864;
+}
+
+
+@media (max-width: 700px){
+  .login img{
+    height: 300px;
+    width: 330px;
+  }
+}
+
+/* NAV BAR */
+
+.style-nav-logo{
+  height: 50px;
+  width: 50px;
+}
+
+.style-nav{
+  border: none;
+  background-color: #dbb82d;
+  padding: 5px 10px 5px 10px;
+}
+
+.logout{
+  border: none;
+  background: #dbb82d;
+}
+
+.style-nav-link{
+  font-size: 15px;
+  color: black;
+  font-weight: bold;
+}
+
+.dropdowm-menu{
+  /* display: none !important; */
+}
+
+@media (max-width: 700px){
+  .navbar-nav{
+    display: none;
+  }
+
+  .dropdown-menu{
+    color: black;
+    font-weight: bold;
+  }
+}
+
+/* MODAL */
+.style-modal-header{
+ background-color: #dbb82d;
+}
+
+
+/* INVENTORY */
+
+.style-title-page{
+  font-weight: bold;
+  font-size: 30px;
 }
