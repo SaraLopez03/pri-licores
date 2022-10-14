@@ -1,10 +1,10 @@
-import NavBar from '../../components/NavBar';
+// import NavBar from '../../components/NavBar';
 
 
 const CashierPage = () => {
     return (
         <div>
-            <NavBar/>
+            {/* <NavBar/> */}
             <h1> HOLA SOY LA PAGINA CASHIER </h1>
         </div>
       
