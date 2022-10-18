@@ -8,7 +8,7 @@ const NavBar = ({name}) => {
 
     let location = useLocation();
 
-    const Logout = () => {
+    const logout = () => {
         localStorage.removeItem("userToken")
         navigate("")
     }
@@ -43,7 +43,7 @@ const NavBar = ({name}) => {
                                 </li>
                                 <li className="nav-item">
                                     <button className="nav-link logout style-nav-link" >
-                                        <i className="fa-solid fa-right-from-bracket" onClick={Logout}></i>
+                                        <i className="fa-solid fa-right-from-bracket" onClick={logout}></i>
                                     </button>
                                 </li>
                             </ul>

@@ -53,7 +53,7 @@ const LoginPage = ({bringUser}) => {
     }
 
     const isButtonDisabled = () => {
-        if(user ==="" || password ===""){
+        if(user === "" || password === ""){
             return true
         } else {
             return false
