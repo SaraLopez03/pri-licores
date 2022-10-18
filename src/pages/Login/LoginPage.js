@@ -6,7 +6,7 @@ import {ENDPOINT} from "../../constants/endpointConstants"
 import { Modal } from "react-bootstrap";
 
 
-const LoginPage = () => {
+const LoginPage = ({bringUser}) => {
     const[user, setUser] = useState('');
     const[password, setPassword] = useState('');
     const[loginError, setLoginError] = useState(false);
@@ -24,7 +24,8 @@ const LoginPage = () => {
             const submitUser = await axios.post(ENDPOINT.POST_LOGIN,addUser); 
             setLoading(false)
             localStorage.setItem("userToken",submitUser.data.token)
-            navigate("/cashier")
+            bringUser(submitUser.data.name)
+            navigate("caja")
         } catch(error){
             setLoginError(true)
             setLoading(false)
@@ -47,12 +48,12 @@ const LoginPage = () => {
         if(loading === false){
             return "Ingresar";
         } else {
-            return <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            return <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         }
     }
 
     const isButtonDisabled = () => {
-        if(user ==="" || password === ""){
+        if(user === "" || password === ""){
             return true
         } else {
             return false
@@ -87,6 +88,7 @@ const LoginPage = () => {
                 </Modal.Header>
                 <Modal.Body>Usuario o contraseña no encontrados</Modal.Body>
             </Modal>
+            
         </div>
         
         )
