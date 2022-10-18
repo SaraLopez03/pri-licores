@@ -50,6 +50,14 @@
   width: 50px;
 }
 
+.nav-link:hover{
+  color:black;
+}
+
+.navbar-nav .nav-link.active{
+  color: #6c540e;
+}
+
 .style-nav{
   border: none;
   background-color: #dbb82d;
@@ -67,19 +75,13 @@
   font-weight: bold;
 }
 
-.dropdowm-menu{
-  /* display: none !important; */
-}
+.style-name{
+  color:black;
+  font-weight: bold;
+  font-size: 12px;
+  margin:0;
+  text-transform: uppercase;
 
-@media (max-width: 700px){
-  .navbar-nav{
-    display: none;
-  }
-
-  .dropdown-menu{
-    color: black;
-    font-weight: bold;
-  }
 }
 
 /* MODAL */
