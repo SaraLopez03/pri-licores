@@ -1,5 +1,4 @@
 import { useState } from "react";
-import NavBar from "../../components/NavBar";
 import Table from "../../components/Table";
 import { Modal } from "react-bootstrap";
 import { ENDPOINT } from "../../constants/endpointConstants";
@@ -8,7 +7,7 @@ import { useEffect } from "react";
 
 const InventoryPage = () => {
     const[newProduct, setNewProduct] = useState(true);
-    const[products, setProducts] = useState([]);
+    const[items, setItems] = useState([]);
     const[nameProduct, setNameProduct] = useState('');
     const[amount, setAmount] = useState(0);
     const[purchasePrice, setPurchasePrice] = useState(0);
@@ -22,7 +21,7 @@ const InventoryPage = () => {
             }
         }
         const bringProducts = await axios.get(ENDPOINT.GET_PRODUCTS, apiOptions);
-        setProducts(bringProducts.data);
+        setItems(bringProducts.data);
     }
     useEffect( () => {
         bringInformation();
@@ -54,22 +53,46 @@ const InventoryPage = () => {
     }
     
     const inventoryColumns = [
-        "Nombre Producto",
-        "Cantidad",
-        "Precio compra",
-        "Precio venta",
-        "Utilidad",
-        "Acciones",
+        {
+            name: "Nombre Producto",
+            key: "name",
+            type: "text"
+        },
+        {
+            name: "Cantidad",
+            key: "amount",
+            type: "number"
+        },
+        {
+            name: "Precio compra",
+            key: "purchasePrice",
+            type: "currency"
+        },
+        {
+            name: "Precio venta",
+            key: "salePrice",
+            type: "currency"
+        },
+        {
+            name: "Utilidad",
+            key: "profit",
+            type: "currency"
+        },
+        {
+            name: "Acciones",
+            key:"action",
+            type: "actions"
+        }
+
     ]
 
 
     return(
         <div>
-            <NavBar/>
             <div className ="mx-4">
                 <h1 className="style-title-page mt-4">Inventario</h1>
                 <button type="button" className="btn btn-primary btn-sm mt-5" onClick={addNewProduct}> <i className="fa-solid fa-plus"></i> Agregar producto </button>
-                <Table columnNames={inventoryColumns} products={products}/>
+                <Table columnNames={inventoryColumns} items={items} />
             </div>
             {/* <Modal show={newProduct}>
                 <Modal.Header closeButton className="style-modal-header">

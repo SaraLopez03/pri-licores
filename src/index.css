@@ -96,3 +96,25 @@
   font-weight: bold;
   font-size: 30px;
 }
+
+.btn-table{
+  background-color: #dbb82d;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+}
+
+.mr{
+  margin-right: 5px;
+}
+
+.btn:first-child:hover{
+  background-color:#dbb82d;
+  color: white;
+}
+
+:not(.btn-check)+.btn:hover{
+  background-color:#dbb82d;
+  color: white;
+}

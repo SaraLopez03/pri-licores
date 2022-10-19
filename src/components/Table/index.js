@@ -1,7 +1,8 @@
 import React from "react";
+import TableCell from "./component/TableCell";
 
 
-const Table = ({columnNames, products}) => {
+const Table = ({columnNames, items}) => {
     return(
         <div>
              <table className="table table-hover">
@@ -10,7 +11,7 @@ const Table = ({columnNames, products}) => {
                         {
                             columnNames.map((column,index)=>{
                                 return(
-                                    <th key={index} scope="col">{column}</th>
+                                    <th key={index} scope="col">{column.name}</th>
                                 )
                             })
                         }
@@ -18,13 +19,14 @@ const Table = ({columnNames, products}) => {
                 </thead>
                 <tbody>
                     {
-                        products.length &&
-                            products.map(product => <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                    </tr>
+                        items.length &&
+                            items.map(item => <tr>
+                                                    {
+                                                        columnNames.map((column, index) => 
+                                                            <TableCell value={item[column.key]} type={column.type}/>
+                                                        )
+                                                    }
+                                                </tr>
                                                     
                                 )
                     }
