@@ -10,8 +10,8 @@ const TableCell = ({value, type}) => {
         } else if (type == "actions"){
             return (
                 <td>
-                    <button type="button" className="btn btn-table btn-sm mr style"> <i className="fa-regular fa-pen-to-square"></i></button>
-                    <button type="button" className="btn btn-table btn-sm style"> <i className="fa-solid fa-trash-can"></i></button>
+                    <button type="button" className="btn btn-table btn-sm me-2"> <i className="fa-regular fa-pen-to-square"></i></button>
+                    <button type="button" className="btn btn-table btn-sm "> <i className="fa-solid fa-trash-can"></i></button>
                 </td>
             )
         } else {

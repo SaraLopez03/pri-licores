@@ -94,12 +94,6 @@ const InventoryPage = () => {
                 <button type="button" className="btn btn-primary btn-sm mt-5" onClick={addNewProduct}> <i className="fa-solid fa-plus"></i> Agregar producto </button>
                 <Table columnNames={inventoryColumns} items={items} />
             </div>
-            {/* <Modal show={newProduct}>
-                <Modal.Header closeButton className="style-modal-header">
-                    <Modal.Title >Error de ingreso</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Usuario o contraseña no encontrados</Modal.Body>
-            </Modal> */}
         </div>
     )
 }

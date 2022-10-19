@@ -105,16 +105,7 @@
   color: white;
 }
 
-.mr{
-  margin-right: 5px;
-}
-
-.btn:first-child:hover{
-  background-color:#dbb82d;
-  color: white;
-}
-
-:not(.btn-check)+.btn:hover{
+.btn.btn-table:hover{
   background-color:#dbb82d;
   color: white;
 }
