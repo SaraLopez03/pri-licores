@@ -96,3 +96,16 @@
   font-weight: bold;
   font-size: 30px;
 }
+
+.btn-table{
+  background-color: #dbb82d;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+}
+
+.btn.btn-table:hover{
+  background-color:#dbb82d;
+  color: white;
+}
