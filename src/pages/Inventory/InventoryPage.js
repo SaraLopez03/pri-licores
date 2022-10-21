@@ -11,6 +11,7 @@ const InventoryPage = () => {
     const[nameProduct, setNameProduct] = useState('');
     const[amount, setAmount] = useState(0);
     const[purchasePrice, setPurchasePrice] = useState(0);
+    const[loading, setLoading] = useState(false);
     const[salePrice, setSalePrice] = useState(0);
 
 
@@ -41,11 +42,17 @@ const InventoryPage = () => {
                 authorization: `Bearer ${token}` 
             }
         }
-        const submitProduct = await axios.post(ENDPOINT.POST_NEW_PRODUCT,addProduct,extraOptions)
-        let newItems = items;
-        newItems.push(submitProduct.data)
-        setItems(newItems.sort((a,b) => (a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : 0)))
-        showModalClose();
+        setLoading(true)
+        try {
+            const submitProduct = await axios.post(ENDPOINT.POST_NEW_PRODUCT,addProduct,extraOptions)
+            setLoading(false)
+            let newItems = items;
+            newItems.push(submitProduct.data)
+            setItems(newItems.sort((a,b) => (a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : 0)))
+            showModalClose();
+        } catch (error) {
+            setLoading(false)
+        }
     } 
 
     const nameChange = (event) => {
@@ -73,7 +80,7 @@ const InventoryPage = () => {
     }
 
     const buttonContent = () => {
-        if( addNewProduct === false){
+        if(loading === false){
             return "AGREGAR";
         } else {
             return <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -81,7 +88,7 @@ const InventoryPage = () => {
     }
 
     const isButtonDisabled = () => {
-        if(nameProduct === "" || amount === "" || purchasePrice === "" || salePrice === ""){
+        if(nameProduct === "" || amount === 0 || purchasePrice === 0 || salePrice === 0){
             return true
         } else {
             return false
