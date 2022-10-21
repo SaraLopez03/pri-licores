@@ -49,7 +49,7 @@ const InventoryPage = () => {
             let newItems = items;
             newItems.push(submitProduct.data)
             setItems(newItems.sort((a,b) => (a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : 0)))
-            showModalClose();
+            modalClose();
         } catch (error) {
             setLoading(false)
         }
@@ -75,7 +75,7 @@ const InventoryPage = () => {
         setNewProduct(true)
     }
     
-    const showModalClose = () => {
+    const modalClose = () => {
         setNewProduct(false)
     }
 
@@ -137,7 +137,7 @@ const InventoryPage = () => {
                 <button type="button" className="btn btn-primary btn-sm mt-5" data-bs-target="#modal" onClick={showModal}> <i className="fa-solid fa-plus"></i> Agregar producto </button>
                 <Table columnNames={inventoryColumns} items={items} />
             </div>
-            <Modal show={newProduct} onHide={showModalClose}>
+            <Modal show={newProduct} onHide={modalClose}>
                 <Modal.Header closeButton className="style-modal-header ">
                     <Modal.Title className="text-modal"> AGREGAR PRODUCTO </Modal.Title>
                 </Modal.Header>
