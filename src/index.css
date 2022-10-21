@@ -36,13 +36,6 @@
 }
 
 
-@media (max-width: 700px){
-  .login img{
-    height: 300px;
-    width: 330px;
-  }
-}
-
 /* NAV BAR */
 
 .style-nav-logo{
@@ -112,4 +105,18 @@
 .btn.btn-table:hover{
   background-color:#dbb82d;
   color: white;
+}
+
+
+/* MOBILE STYLES */
+
+@media (max-width: 700px){
+  .login img{
+    height: 300px;
+    width: 330px;
+  }
+
+  .table {
+    width: 660px;
+  }
 }

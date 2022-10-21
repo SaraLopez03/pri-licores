@@ -4,7 +4,7 @@ import TableCell from "./component/TableCell";
 
 const Table = ({columnNames, items}) => {
     return(
-        <div>
+        <div className="table-responsive">
              <table className="table table-hover">
                 <thead>
                     <tr>
