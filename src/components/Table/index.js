@@ -19,16 +19,17 @@ const Table = ({columnNames, items}) => {
                 </thead>
                 <tbody>
                     {
-                        items.length &&
-                            items.map(item => <tr>
+                        items.length ?
+                            items.map((item,index) => <tr key={index}>
                                                     {
                                                         columnNames.map((column, index) => 
-                                                            <TableCell value={item[column.key]} type={column.type}/>
+                                                            <TableCell key={index} value={item[column.key]} type={column.type}/>
                                                         )
                                                     }
                                                 </tr>
                                                     
-                                )
+                                ):
+                            <tr><td colSpan={"100%"}>no found</td></tr>
                     }
                 </tbody>
                 </table>
