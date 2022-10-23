@@ -9,10 +9,10 @@ const InventoryPage = () => {
     const[newProduct, setNewProduct] = useState(false);
     const[items, setItems] = useState([]);
     const[nameProduct, setNameProduct] = useState('');
-    const[amount, setAmount] = useState(0);
-    const[purchasePrice, setPurchasePrice] = useState(0);
+    const[amount, setAmount] = useState('');
+    const[purchasePrice, setPurchasePrice] = useState('');
     const[loading, setLoading] = useState(false);
-    const[salePrice, setSalePrice] = useState(0);
+    const[salePrice, setSalePrice] = useState('');
 
 
     const bringInformation = async () => {
@@ -50,6 +50,7 @@ const InventoryPage = () => {
             newItems.push(submitProduct.data)
             setItems(newItems.sort((a,b) => (a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : 0)))
             modalClose();
+            resetProductFormValues();
         } catch (error) {
             setLoading(false)
         }
@@ -88,11 +89,22 @@ const InventoryPage = () => {
     }
 
     const isButtonDisabled = () => {
-        if(nameProduct === "" || amount === 0 || purchasePrice === 0 || salePrice === 0){
+        if(nameProduct === "" || isValidInputNumber(amount) || isValidInputNumber(purchasePrice) || isValidInputNumber(salePrice)){
             return true
         } else {
             return false
         }
+    }
+
+    const isValidInputNumber =  (value) => {
+        return !value || isNaN(value);
+    }
+
+    const resetProductFormValues = () => {
+        setNameProduct('');
+        setAmount('');
+        setSalePrice('');
+        setPurchasePrice('');
     }
 
     const inventoryColumns = [
@@ -145,25 +157,25 @@ const InventoryPage = () => {
                     <div className="row">
                         <div className="col-md-6">
                             <label className="col-form-label">Nombre Producto</label>
-                            <input type="text" className="form-control" onChange={nameChange}/>
+                            <input type="text" className="form-control" value={nameProduct} onChange={nameChange}/>
                         </div>
                         <div className="col-md-6">
                             <label className="col-form-label">Cantidad</label>
-                            <input type="number" className="form-control" id="amount" onChange={amountChange}/>
+                            <input type="number" className="form-control" id="amount" value={amount} onChange={amountChange}/>
                         </div>
                     </div>    
                     <div className="row">
                         <div className="col-md-6">
                             <label className="col-form-label">Precio de Compra</label>
-                            <input type="number" className="form-control" id="purchase-price" onChange={purchasePriceChange}/>
+                            <input type="number" className="form-control" id="purchase-price" value={purchasePrice} onChange={purchasePriceChange}/>
                         </div>
                         <div className="col-md-6">
                             <label className="col-form-label">Precio de Venta</label>
-                            <input type="number" className="form-control" id="sale-price" onChange={salePriceChange}/>
+                            <input type="number" className="form-control" id="sale-price" value={salePrice} onChange={salePriceChange}/>
                         </div>
                     </div>
                     <div className="row justify-content-center mt-5">
-                        <div className="col-4">
+                        <div className="col-6 col-md-4">
                             <button type="button" className="btn btn-primary btn-sm w-100 text-modal" onClick={addNewProduct} disabled={isButtonDisabled()}> {buttonContent()}</button>
                         </div>
                     </div>
