@@ -105,6 +105,15 @@ const InventoryPage = () => {
         setAmount('');
         setSalePrice('');
         setPurchasePrice('');
+    }    
+    
+    const editProduct = (product) => {
+        showModal()
+        console.log(product)
+    }
+
+    const deleteProduct = () => {
+        showModal()
     }
 
     const inventoryColumns = [
@@ -136,7 +145,17 @@ const InventoryPage = () => {
         {
             name: "Acciones",
             key:"action",
-            type: "actions"
+            type: "actions",
+            buttons: [
+                {
+                    iconClass: "fa-regular fa-pen-to-square",
+                    action: editProduct 
+                },
+                {
+                    iconClass: "fa-solid fa-trash-can",
+                    action: deleteProduct
+                }
+            ]
         }
 
     ]

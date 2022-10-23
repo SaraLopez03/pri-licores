@@ -23,7 +23,7 @@ const Table = ({columnNames, items}) => {
                             items.map((item,index) => <tr key={index}>
                                                     {
                                                         columnNames.map((column, index) => 
-                                                            <TableCell key={index} value={item[column.key]} type={column.type}/>
+                                                            <TableCell key={index} value={item[column.key]} columnConfig={column} item={item}/>
                                                         )
                                                     }
                                                 </tr>
