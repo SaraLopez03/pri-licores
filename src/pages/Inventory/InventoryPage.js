@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Table from "../../components/Table";
-import { Modal, ModalFooter } from "react-bootstrap";
+import { Modal, ModalBody, ModalFooter } from "react-bootstrap";
 import { ENDPOINT } from "../../constants/endpointConstants";
 import axios from "axios";
 import { useEffect } from "react";
 
 const InventoryPage = () => {
     const[newProduct, setNewProduct] = useState(false);
+    const[deleteProducts, setDeleteProducts] = useState(false)
     const[items, setItems] = useState([]);
     const[nameProduct, setNameProduct] = useState('');
     const[amount, setAmount] = useState('');
@@ -90,6 +91,27 @@ const InventoryPage = () => {
         }
     }
 
+    const deleteProductModal = async () => {
+        let putOffProduct = {
+            productId: productId,
+        }
+        const token = getToken()
+        token.data = putOffProduct
+        setLoading(true)
+        try {
+            const submitDeleteProduct = await axios.delete(ENDPOINT.DEL_DELETE_PRODUCT,token)
+            setLoading(false)
+            const itemsUpdated = items.filter( (item) => {
+                return item.productId !== productId
+            })
+            setItems(itemsUpdated)
+            modalCloseDelete()
+        } catch (error) {
+            setLoading(false)
+        }
+    }
+
+
     const nameChange = (event) => {
         setNameProduct(event.target.value)
     }
@@ -106,12 +128,27 @@ const InventoryPage = () => {
         setSalePrice(parseInt(event.target.value))
     }
 
+    const showModalDelete = () => {
+        setDeleteProducts(true)
+    }
+
     const showModal = () => {
         setNewProduct(true)
+    }
+
+    const modalCloseDelete = () => {
+        setDeleteProducts(false)
     }
     
     const modalClose = () => {
         setNewProduct(false)
+    }
+    const spinnerDelete = () => {
+        if(loading === false){
+            return "SI";
+        } else {
+            return <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        }
     }
 
     const buttonContent = () => {
@@ -151,8 +188,9 @@ const InventoryPage = () => {
         showModal()
     }
 
-    const deleteProduct = () => {
-        showModal()
+    const deleteProduct = (product) => {
+        setProductId(product.productId)
+        showModalDelete()
     }
 
     const UpdateModal = () => {
@@ -235,7 +273,7 @@ const InventoryPage = () => {
                 <Table columnNames={inventoryColumns} items={items} />
             </div>
             <Modal show={newProduct} onHide={modalClose}>
-                <Modal.Header closeButton className="style-modal-header ">
+                <Modal.Header closeButton className="style-modal-header">
                     <Modal.Title className="text-modal"> {UpdateModal()} PRODUCTO </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -265,6 +303,22 @@ const InventoryPage = () => {
                         </div>
                     </div>
                 </Modal.Body>
+            </Modal>
+            <Modal show={deleteProducts} onHide={modalCloseDelete}>
+                <Modal.Header closeButton className="style-modal-header ">
+                    <Modal.Title className="text-modal"> ELIMINAR PRODUCTO </Modal.Title>
+                </Modal.Header>
+                <ModalBody>
+                    <p className="text-center"> Estas seguro que deseas eliminar este producto? </p>
+                    <div className="row">
+                            <div className="col-6">
+                                <button type="button" className="btn btn-primary btn-sm w-100 text-modal mt-3" onClick={deleteProductModal}> {spinnerDelete()} </button>
+                            </div>
+                            <div className="col-6">
+                                <button type="button" className="btn btn-primary btn-sm w-100 text-modal mt-3" onClick={modalCloseDelete}> NO </button>
+                            </div>
+                    </div>
+                </ModalBody>
             </Modal>
         </div>
     )
