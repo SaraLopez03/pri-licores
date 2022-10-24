@@ -13,6 +13,9 @@ const InventoryPage = () => {
     const[purchasePrice, setPurchasePrice] = useState('');
     const[loading, setLoading] = useState(false);
     const[salePrice, setSalePrice] = useState('');
+    const[isUpdateModal, setIsUpdateModal] = useState(false);
+    const[productId, setProductId] = useState('');
+
 
 
     const bringInformation = async () => {
@@ -29,6 +32,16 @@ const InventoryPage = () => {
         bringInformation();
     } ,[]) 
 
+    const getToken = () => {
+        const token = localStorage.getItem("userToken");
+        const extraOptions = {
+            headers: {
+                authorization: `Bearer ${token}` 
+            }
+        }
+        return extraOptions
+    }
+
     const addNewProduct = async () => {
         let addProduct = {
             name: nameProduct,
@@ -36,15 +49,10 @@ const InventoryPage = () => {
             purchasePrice: purchasePrice,
             salePrice: salePrice,
         }
-        const token = localStorage.getItem("userToken");
-        const extraOptions = {
-            headers: {
-                authorization: `Bearer ${token}` 
-            }
-        }
+        const token = getToken()
         setLoading(true)
         try {
-            const submitProduct = await axios.post(ENDPOINT.POST_NEW_PRODUCT,addProduct,extraOptions)
+            const submitProduct = await axios.post(ENDPOINT.POST_NEW_PRODUCT,addProduct,token)
             setLoading(false)
             let newItems = items;
             newItems.push(submitProduct.data)
@@ -55,6 +63,32 @@ const InventoryPage = () => {
             setLoading(false)
         }
     } 
+
+    const updateProduct = async () => {
+        let update = {
+            name: nameProduct,
+            amount: amount,
+            purchasePrice: purchasePrice,
+            salePrice: salePrice,
+            productId: productId,
+        }
+        const token = getToken()
+        setLoading(true)
+        try {
+            const submitUpdateProduct = await axios.put(ENDPOINT.PUT_UPDATE_PRODUCT,update,token)
+            setLoading(false)
+            const productIndex = items.findIndex( (item) => {
+                return item.productId === productId
+            })
+            items[productIndex] = submitUpdateProduct.data
+            setItems(items)
+            modalClose();
+            resetProductFormValues();
+        } catch (error) {
+            setLoading(false)
+            
+        }
+    }
 
     const nameChange = (event) => {
         setNameProduct(event.target.value)
@@ -82,7 +116,7 @@ const InventoryPage = () => {
 
     const buttonContent = () => {
         if(loading === false){
-            return "AGREGAR";
+            return UpdateModal();
         } else {
             return <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         }
@@ -105,6 +139,47 @@ const InventoryPage = () => {
         setAmount('');
         setSalePrice('');
         setPurchasePrice('');
+    }    
+
+    const editProduct = (product) => {
+        setNameProduct(product.name)
+        setAmount(product.amount)
+        setPurchasePrice(product.purchasePrice)
+        setSalePrice(product.salePrice)
+        setProductId(product.productId)
+        setIsUpdateModal(true)
+        showModal()
+    }
+
+    const deleteProduct = () => {
+        showModal()
+    }
+
+    const UpdateModal = () => {
+        if(isUpdateModal === true){
+            return (
+                "ACTUALIZAR"
+            ) 
+        } else {
+            return (
+                "AGREGAR"
+            )
+        }
+    }
+
+    const modalOnClick = () => {
+        if(isUpdateModal === true){
+            updateProduct()
+
+        } else {
+            addNewProduct()
+        }
+    }
+
+    const showModalNewProduct = () => {
+        resetProductFormValues()
+        setIsUpdateModal(false)
+        showModal()
     }
 
     const inventoryColumns = [
@@ -136,7 +211,17 @@ const InventoryPage = () => {
         {
             name: "Acciones",
             key:"action",
-            type: "actions"
+            type: "actions",
+            buttons: [
+                {
+                    iconClass: "fa-regular fa-pen-to-square",
+                    action: editProduct 
+                },
+                {
+                    iconClass: "fa-solid fa-trash-can",
+                    action: deleteProduct
+                }
+            ]
         }
 
     ]
@@ -146,12 +231,12 @@ const InventoryPage = () => {
         <div>
             <div className ="mx-4">
                 <h1 className="style-title-page mt-4">Inventario</h1>
-                <button type="button" className="btn btn-primary btn-sm mt-5" data-bs-target="#modal" onClick={showModal}> <i className="fa-solid fa-plus"></i> Agregar producto </button>
+                <button type="button" className="btn btn-primary btn-sm mt-5" data-bs-target="#modal" onClick={showModalNewProduct}> <i className="fa-solid fa-plus"></i> Agregar producto </button>
                 <Table columnNames={inventoryColumns} items={items} />
             </div>
             <Modal show={newProduct} onHide={modalClose}>
                 <Modal.Header closeButton className="style-modal-header ">
-                    <Modal.Title className="text-modal"> AGREGAR PRODUCTO </Modal.Title>
+                    <Modal.Title className="text-modal"> {UpdateModal()} PRODUCTO </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="row">
@@ -175,8 +260,8 @@ const InventoryPage = () => {
                         </div>
                     </div>
                     <div className="row justify-content-center mt-5">
-                        <div className="col-6 col-md-4">
-                            <button type="button" className="btn btn-primary btn-sm w-100 text-modal" onClick={addNewProduct} disabled={isButtonDisabled()}> {buttonContent()}</button>
+                        <div className="col-6 col-md-5">
+                            <button type="button" className="btn btn-primary btn-sm w-100 text-modal" onClick={modalOnClick} disabled={isButtonDisabled()}> {buttonContent()}</button>
                         </div>
                     </div>
                 </Modal.Body>
