@@ -11,6 +11,8 @@ const Table = ({columnNames, items}) => {
                         {
                             columnNames.map((column,index)=>{
                                 return(
+                                    column.type === 'actions' ?
+                                    <th key={index} scope="col" className="d-flex justify-content-center">{column.name}</th>:
                                     <th key={index} scope="col">{column.name}</th>
                                 )
                             })
