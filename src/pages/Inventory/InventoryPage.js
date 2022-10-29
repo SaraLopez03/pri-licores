@@ -4,6 +4,7 @@ import { Modal, ModalBody, ModalFooter } from "react-bootstrap";
 import { ENDPOINT } from "../../constants/endpointConstants";
 import axios from "axios";
 import { useEffect } from "react";
+import { getToken } from "../../utils/utils";
 
 const InventoryPage = () => {
     const[newProduct, setNewProduct] = useState(false);
@@ -32,16 +33,6 @@ const InventoryPage = () => {
     useEffect( () => {
         bringInformation();
     } ,[]) 
-
-    const getToken = () => {
-        const token = localStorage.getItem("userToken");
-        const extraOptions = {
-            headers: {
-                authorization: `Bearer ${token}` 
-            }
-        }
-        return extraOptions
-    }
 
     const addNewProduct = async () => {
         let addProduct = {

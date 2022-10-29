@@ -143,3 +143,31 @@ input[type=number] {
     width: 660px;
   }
 }
+
+/* SALES PAGE */
+
+.style-icon-sale{
+  color: #dbb82d;
+  font-size: 30px;
+  margin-right: 22px;
+  margin-left: 6px;
+}
+
+.style-cards{
+  display: flex;
+  width: max-content;
+  align-items: center;
+  border-radius: 19px;
+  box-shadow:  1px 1px 8px 2px #dbb82d;
+  padding: 2px 12px;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.react-datepicker-wrapper input{
+  border-radius: 5px;
+  padding: 3px 5px;
+  border-color: #dbb82d;
+}
