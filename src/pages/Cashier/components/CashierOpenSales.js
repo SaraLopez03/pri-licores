@@ -3,7 +3,6 @@ import Table from "../../../components/Table";
 const CashierOpenSales = ({sales}) => {
 
     const paySale = sale => {
-        console.log({sale});
     }
 
     const openSalesColumn = [

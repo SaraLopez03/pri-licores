@@ -23,12 +23,10 @@ const CashierPage = () => {
             const response = await axios.get(ENDPOINT.OPEN_SALES,apiOptions)
             setOpenSales(response.data);
         } catch (error) {
-            console.log("ERROR OPEN SALES");
         }
     }
 
     const getCurrentProducts = (products) => {
-        console.log(products);
         createNewSale(products)
     }
 
