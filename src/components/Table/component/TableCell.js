@@ -9,11 +9,11 @@ const TableCell = ({value, columnConfig, item}) => {
             ); 
         } else if (columnConfig.type == "actions"){
             return (
-                <td>
+                <td className="d-flex justify-content-center">
                     {
                         columnConfig.buttons.map((oneButton, index) => {
                             return (
-                                <button type="button" className="btn btn-table btn-sm me-2" onClick={() => {oneButton.action(item)}}> <i className={oneButton.iconClass}></i></button>
+                                <button type="button" className="btn btn-table btn-sm me-2" key={index} onClick={() => {oneButton.action(item)}}> <i className={oneButton.iconClass}></i></button>
                             )
                         })
                     }

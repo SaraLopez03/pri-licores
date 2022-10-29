@@ -107,6 +107,29 @@
   color: white;
 }
 
+/* CASHIER */
+
+.cashier-select {
+  font-size: 15px;
+}
+
+.cashier-form .input-title {
+  font-weight: bold;
+}
+
+
+/* GLOBAL */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 
 /* MOBILE STYLES */
 
