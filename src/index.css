@@ -130,19 +130,11 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-
-/* MOBILE STYLES */
-
-@media (max-width: 700px){
-  .login img{
-    height: 300px;
-    width: 330px;
-  }
-
-  .table {
-    width: 660px;
-  }
+.text-ellipsis{
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
+
 
 /* SALES PAGE */
 
@@ -159,7 +151,11 @@ input[type=number] {
   align-items: center;
   border-radius: 19px;
   box-shadow:  1px 1px 8px 2px #dbb82d;
-  padding: 2px 12px;
+  padding: 10px 9px;
+}
+
+.style-cards p {
+  margin-bottom: 0;
 }
 
 .bold{
@@ -170,4 +166,39 @@ input[type=number] {
   border-radius: 5px;
   padding: 3px 5px;
   border-color: #dbb82d;
+  width: 100%;
+}
+.react-datepicker .react-datepicker__day--in-range{
+  background-color: #dbb82d;
+}
+
+/* MOBILE STYLES */
+
+@media (max-width: 700px){
+  .login img{
+    height: 300px;
+    width: 330px;
+  }
+
+  .t-responsive {
+    width: 660px;
+  }
+
+  .cashier-form {
+    font-size: 12px;
+  }
+
+  .cashier-form .btn-table {
+    padding: 0 7px;
+  }
+  .cashier-form .btn-table i {
+    font-size: 12px;
+  }
+
+  .cashier-form input {
+    font-size: 12px;
+  }
+  .cashier-select {
+    font-size: 12px;
+  }
 }

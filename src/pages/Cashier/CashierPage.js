@@ -44,7 +44,7 @@ const CashierPage = () => {
                 <div className="col-12 col-md-6">
                     <CashierForm buttonAction={getCurrentProducts}/>
                 </div>
-                <div className="col-12 col-md-6">
+                <div className="col-12 col-md-6 mt-md-0 mt-5">
                     <CashierOpenSales sales={openSales}/>
                 </div>
             </div>

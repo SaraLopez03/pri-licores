@@ -10,7 +10,7 @@ const TableCell = ({value, columnConfig, item}) => {
             ); 
         } else if (columnConfig.type == "actions"){
             return (
-                <td className="d-flex justify-content-center">
+                <td>
                     {
                         columnConfig.buttons.map((oneButton, index) => {
                             return (

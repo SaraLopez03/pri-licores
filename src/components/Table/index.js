@@ -2,18 +2,16 @@ import React from "react";
 import TableCell from "./component/TableCell";
 
 
-const Table = ({columnNames, items}) => {
+const Table = ({columnNames, fixSize, items}) => {
     return(
         <div className="table-responsive">
-             <table className="table table-hover">
+             <table className={`table table-hover ${fixSize ? 't-responsive' : ''}`}>
                 <thead>
                     <tr>
                         {
                             columnNames.map((column,index)=>{
                                 return(
-                                    column.type === 'actions' ?
-                                    <th key={index} scope="col" className="d-flex justify-content-center">{column.name}</th>:
-                                    <th key={index} scope="col">{column.name}</th>
+                                    <th key={index} scope="col" className={`${column.colSize ? column.colSize : ''}`}>{column.name}</th>
                                 )
                             })
                         }
@@ -31,7 +29,7 @@ const Table = ({columnNames, items}) => {
                                                 </tr>
                                                     
                                 ):
-                            <tr><td colSpan={"100%"}>no found</td></tr>
+                            <tr><td colSpan={"100%"}>No hay registros</td></tr>
                     }
                 </tbody>
                 </table>
