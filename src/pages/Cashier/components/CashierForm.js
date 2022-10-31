@@ -156,7 +156,7 @@ const CashierForm = ({buttonAction, type}) => {
                     </div>
                     {
                         products.map((product, index) =>
-                            <div className="row mt-1 align-items-center" key={index}>
+                            <div className="row align-items-center" key={index}>
                                 <div className={`col-6`}>
                                     <select className="form-select cashier-select" value={product.productId} onChange={(e) => productOnChange(e, index)}>
                                         <option value="" disabled>Seleccione un producto</option>
