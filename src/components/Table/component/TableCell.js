@@ -1,4 +1,5 @@
 import { Button } from "react-bootstrap";
+import { PAYMENT_METHOD } from "../../../constants/sharedConstans";
 
 const TableCell = ({value, columnConfig, item}) => {
 
@@ -9,7 +10,7 @@ const TableCell = ({value, columnConfig, item}) => {
             ); 
         } else if (columnConfig.type == "actions"){
             return (
-                <td className="d-flex justify-content-center">
+                <td>
                     {
                         columnConfig.buttons.map((oneButton, index) => {
                             return (
@@ -20,7 +21,18 @@ const TableCell = ({value, columnConfig, item}) => {
 
                 </td>
             )
-        } else {
+        } else if(columnConfig.type == "date") {
+            let formatDay = new Date(value)
+            return (
+               <td> {formatDay.toLocaleDateString("es-CL")} </td> 
+            )
+
+        } else if (columnConfig.type == "paymentMethod") {
+            return (
+                <td> {PAYMENT_METHOD[value]}</td>
+            )
+
+        }else {
            return <td> {value} </td>
         }
     }

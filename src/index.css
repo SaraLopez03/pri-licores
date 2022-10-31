@@ -130,6 +130,47 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.text-ellipsis{
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+
+/* SALES PAGE */
+
+.style-icon-sale{
+  color: #dbb82d;
+  font-size: 30px;
+  margin-right: 22px;
+  margin-left: 6px;
+}
+
+.style-cards{
+  display: flex;
+  width: max-content;
+  align-items: center;
+  border-radius: 19px;
+  box-shadow:  1px 1px 8px 2px #dbb82d;
+  padding: 10px 9px;
+}
+
+.style-cards p {
+  margin-bottom: 0;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.react-datepicker-wrapper input{
+  border-radius: 5px;
+  padding: 3px 5px;
+  border-color: #dbb82d;
+  width: 100%;
+}
+.react-datepicker .react-datepicker__day--in-range{
+  background-color: #dbb82d;
+}
 
 /* MOBILE STYLES */
 
@@ -139,7 +180,25 @@ input[type=number] {
     width: 330px;
   }
 
-  .table {
+  .t-responsive {
     width: 660px;
+  }
+
+  .cashier-form {
+    font-size: 12px;
+  }
+
+  .cashier-form .btn-table {
+    padding: 0 7px;
+  }
+  .cashier-form .btn-table i {
+    font-size: 12px;
+  }
+
+  .cashier-form input {
+    font-size: 12px;
+  }
+  .cashier-select {
+    font-size: 12px;
   }
 }

@@ -110,6 +110,7 @@ const CashierForm = ({buttonAction, type}) => {
             setIsLoading(false);
             buttonAction(response.data);
             setProducts(defaultProducts);
+            setUserName('');
         } catch (error) {
             setIsLoading(false);
         }
@@ -143,53 +144,57 @@ const CashierForm = ({buttonAction, type}) => {
     return (
         <div className="cashier-form">
             <div className="row">
-                <div className="col-3 input-title">Nombre Cliente</div>
-                <div className="col-4 input-title">Producto</div>
-                <div className="col-2 input-title">Cantidad</div>
-                <div className="col-2 input-title">Total</div>
-            </div>
-            {
-                products.map((product, index) =>
-                    <div className="row mt-1 align-items-center" key={index}>
-                        {!index && <div className="col-3">
-                            <input type="text" className="form-control" value={userName} onChange={nameOnChange}/>
-                        </div>}
-                        <div className={`col-4 ${index && 'offset-3'}`}>
-                            <select className="form-select cashier-select" value={product.productId} onChange={(e) => productOnChange(e, index)}>
-                                <option value="" disabled>Seleccione un producto</option>
-                                {
-                                    currentProducts.length ?
-                                    currentProducts.map((product, i) => <option value={product.productId} key={i}>{product.name}</option>):
-                                    null
-                                }
-                            </select>
-                        </div>
-                        <div className="col-2">
-                            <input type="number" className='form-control' placeholder="0" value={product.amount} onChange={(e) => amountOnChange(e, index)}/>
-                        </div>
-                        <div className="col-2">
-                            {"$" + new Intl.NumberFormat('es-CL').format(product.total)}
-                        </div>
-                        <div className="col-1">
-                            <button type="button" className="btn btn-table btn-sm" onClick={()=>removeProduct(index)} disabled={!isRemoveButtonDisabled()}> <i className="fa-solid fa-xmark"></i></button>
-                        </div>
+                <div className="col-md-3 col-6">
+                    <div className="input-title">Nombre Cliente</div>
+                    <input type="text" className="form-control" value={userName} onChange={nameOnChange}/>
+                </div>
+                <div className="col-md-9 col-12 col-offset-6 mt-3 mt-md-0">
+                    <div className="row">
+                        <div className="col-6 input-title">Producto</div>
+                        <div className="col-2 input-title text-ellipsis">Cantidad</div>
+                        <div className="col-4 input-title">Total</div>
                     </div>
-                )
-            }
+                    {
+                        products.map((product, index) =>
+                            <div className="row align-items-center" key={index}>
+                                <div className={`col-6`}>
+                                    <select className="form-select cashier-select" value={product.productId} onChange={(e) => productOnChange(e, index)}>
+                                        <option value="" disabled>Seleccione un producto</option>
+                                        {
+                                            currentProducts.length ?
+                                            currentProducts.map((product, i) => <option value={product.productId} key={i}>{product.name}</option>):
+                                            null
+                                        }
+                                    </select>
+                                </div>
+                                <div className="col-2">
+                                    <input type="number" className='form-control' placeholder="0" value={product.amount} onChange={(e) => amountOnChange(e, index)}/>
+                                </div>
+                                <div className="col-3">
+                                    {"$" + new Intl.NumberFormat('es-CL').format(product.total)}
+                                </div>
+                                <div className="col-1">
+                                    <button type="button" className="btn btn-table btn-sm" onClick={()=>removeProduct(index)} disabled={!isRemoveButtonDisabled()}> <i className="fa-solid fa-xmark"></i></button>
+                                </div>
+                            </div>
+                        )
+                    }
+                </div>
+            </div>
             <div className="row mt-5">
-                <div className="col-6 offset-3">
+                <div className="col-8 col-md-6 offset-md-3 offset-0">
                     <button type="button" className="btn btn-table btn-sm" onClick={addNewProduct}> <i className="fa-solid fa-plus"></i></button>
                 </div>
-                <div className="col-2">
+                <div className="col-3 col-md-2">
                     <p className="mb-1 fw-bold">Total Venta</p>
                     <p>{"$" + new Intl.NumberFormat('es-CL').format(totalSale)}</p>
                 </div>
             </div>
             <div className="row mt-3">
                 <div className="col-3">
-                    <button type="button" className="btn btn-table btn-sm" onClick={sendProducts} disabled={isButtonDisabled()}> {buttonContent()} </button>
+                    <button type="button" className="btn btn-table btn-sm px-2 py-1" onClick={sendProducts} disabled={isButtonDisabled()}> {buttonContent()} </button>
                 </div>
-            </div>
+            </div> 
         </div>
     )
 }

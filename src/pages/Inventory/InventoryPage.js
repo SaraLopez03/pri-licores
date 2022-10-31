@@ -4,6 +4,7 @@ import { Modal, ModalBody, ModalFooter } from "react-bootstrap";
 import { ENDPOINT } from "../../constants/endpointConstants";
 import axios from "axios";
 import { useEffect } from "react";
+import { getToken } from "../../utils/utils";
 
 const InventoryPage = () => {
     const[newProduct, setNewProduct] = useState(false);
@@ -32,16 +33,6 @@ const InventoryPage = () => {
     useEffect( () => {
         bringInformation();
     } ,[]) 
-
-    const getToken = () => {
-        const token = localStorage.getItem("userToken");
-        const extraOptions = {
-            headers: {
-                authorization: `Bearer ${token}` 
-            }
-        }
-        return extraOptions
-    }
 
     const addNewProduct = async () => {
         let addProduct = {
@@ -270,7 +261,7 @@ const InventoryPage = () => {
             <div className ="mx-4">
                 <h1 className="style-title-page mt-4">Inventario</h1>
                 <button type="button" className="btn btn-primary btn-sm mt-5" data-bs-target="#modal" onClick={showModalNewProduct}> <i className="fa-solid fa-plus"></i> Agregar producto </button>
-                <Table columnNames={inventoryColumns} items={items} />
+                <Table columnNames={inventoryColumns} items={items} fixSize={true}/>
             </div>
             <Modal show={newProduct} onHide={modalClose}>
                 <Modal.Header closeButton className="style-modal-header">
