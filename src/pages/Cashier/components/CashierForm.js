@@ -96,7 +96,7 @@ const CashierForm = ({buttonAction, type}) => {
             date: (new Date).getTime(),
             clientName: userName ? userName : "Cliente",
             saleProducts: products,
-            status: 1
+            status: 0
         };
         try {
             const storeToken = localStorage.getItem("userToken");
