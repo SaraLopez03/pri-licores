@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { ENDPOINT } from "../../../constants/endpointConstants"
 import axios from 'axios';
+import { getToken } from "../../../utils/utils";
 
-const CashierForm = ({buttonAction, type}) => {
+const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
     const defaultProducts = [
         {
             productId: '',
@@ -14,9 +15,9 @@ const CashierForm = ({buttonAction, type}) => {
         }
     ]
     const [currentProducts, setCurrentProducts] = useState([]);
-    const [products, setProducts] = useState(defaultProducts);
-    const [totalSale, setTotalSale] = useState(0);
-    const [userName, setUserName] = useState('');
+    const [products, setProducts] = useState(productsToUpdate ? productsToUpdate : defaultProducts);
+    const [totalSale, setTotalSale] = useState(saleToUpdate?.totalPrice ? saleToUpdate.totalPrice : 0);
+    const [userName, setUserName] = useState(saleToUpdate?.userName ? saleToUpdate.userName : '');
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -24,13 +25,8 @@ const CashierForm = ({buttonAction, type}) => {
     }, [])
 
     const getProducts = async () => {
-        const storeToken = localStorage.getItem("userToken");
-        const apiOptions = {
-            headers: {
-                authorization: `Bearer ${storeToken}` 
-            }
-        }
-        const response = await axios.get(ENDPOINT.GET_PRODUCTS, apiOptions);
+        const token = getToken();
+        const response = await axios.get(ENDPOINT.GET_PRODUCTS, token);
         setCurrentProducts(response.data);
     }
 
@@ -99,18 +95,31 @@ const CashierForm = ({buttonAction, type}) => {
             status: 0
         };
         try {
-            const storeToken = localStorage.getItem("userToken");
-            const apiOptions = {
-                headers: {
-                    authorization: `Bearer ${storeToken}` 
-                }
-            };
+            const token = getToken();
             setIsLoading(true);
-            const response = await axios.post(ENDPOINT.NEW_SALE, payload, apiOptions)
+            const response = await axios.post(ENDPOINT.NEW_SALE, payload, token)
             setIsLoading(false);
             buttonAction(response.data);
             setProducts(defaultProducts);
             setUserName('');
+        } catch (error) {
+            setIsLoading(false);
+        }
+        
+    }
+
+    const updateSale = async () => {
+        const payload = {
+            saleId: saleToUpdate.saleId,
+            clientName: userName ? userName : "Cliente",
+            saleProducts: products,
+        };
+        try {
+            const token = getToken();
+            setIsLoading(true);
+            const response = await axios.put(ENDPOINT.UPDATE_SALE, payload, token)
+            setIsLoading(false);
+            buttonAction(response.data);
         } catch (error) {
             setIsLoading(false);
         }
@@ -135,9 +144,11 @@ const CashierForm = ({buttonAction, type}) => {
 
     const buttonContent = () => {
         if (isLoading) {
-            return <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            return <button type="button" className="btn btn-table btn-sm px-2 py-1"> <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> </button>
+        } else if (saleToUpdate) {
+            return <button type="button" className="btn btn-table btn-sm px-2 py-1" onClick={updateSale} disabled={isButtonDisabled()}> ACTUALIZAR </button>
         } else {
-            return "AGREGAR"
+            return <button type="button" className="btn btn-table btn-sm px-2 py-1" onClick={sendProducts} disabled={isButtonDisabled()}> AGREGAR </button>
         }
     }
 
@@ -146,7 +157,7 @@ const CashierForm = ({buttonAction, type}) => {
             <div className="row">
                 <div className="col-md-3 col-6">
                     <div className="input-title">Nombre Cliente</div>
-                    <input type="text" className="form-control" value={userName} onChange={nameOnChange}/>
+                    <input type="text" className="form-control mt-2" value={userName} onChange={nameOnChange}/>
                 </div>
                 <div className="col-md-9 col-12 col-offset-6 mt-3 mt-md-0">
                     <div className="row">
@@ -156,7 +167,7 @@ const CashierForm = ({buttonAction, type}) => {
                     </div>
                     {
                         products.map((product, index) =>
-                            <div className="row align-items-center" key={index}>
+                            <div className="row align-items-center mt-2" key={index}>
                                 <div className={`col-6`}>
                                     <select className="form-select cashier-select" value={product.productId} onChange={(e) => productOnChange(e, index)}>
                                         <option value="" disabled>Seleccione un producto</option>
@@ -173,9 +184,9 @@ const CashierForm = ({buttonAction, type}) => {
                                 <div className="col-3">
                                     {"$" + new Intl.NumberFormat('es-CL').format(product.total)}
                                 </div>
-                                <div className="col-1">
+                                {!saleToUpdate && <div className="col-1">
                                     <button type="button" className="btn btn-table btn-sm" onClick={()=>removeProduct(index)} disabled={!isRemoveButtonDisabled()}> <i className="fa-solid fa-xmark"></i></button>
-                                </div>
+                                </div>}
                             </div>
                         )
                     }
@@ -192,7 +203,7 @@ const CashierForm = ({buttonAction, type}) => {
             </div>
             <div className="row mt-3">
                 <div className="col-3">
-                    <button type="button" className="btn btn-table btn-sm px-2 py-1" onClick={sendProducts} disabled={isButtonDisabled()}> {buttonContent()} </button>
+                    {buttonContent()}
                 </div>
             </div> 
         </div>

@@ -1,6 +1,6 @@
 import Table from "../../../components/Table";
 
-const CashierOpenSales = ({sales}) => {
+const CashierOpenSales = ({sales, itemClick}) => {
 
     const paySale = sale => {
     }
@@ -34,11 +34,11 @@ const CashierOpenSales = ({sales}) => {
     
     return (
         <div>
-            <div className="row text-center">
+            <div className="row text-center fw-bold">
                 <h2>Pedidos Abiertos</h2>
             </div>
             <div className="row ps-md-5 ps-0 mt-4">
-                <Table columnNames={openSalesColumn} items={sales}/>
+                <Table columnNames={openSalesColumn} items={sales} itemClick={itemClick}/>
             </div>
         </div>
     )

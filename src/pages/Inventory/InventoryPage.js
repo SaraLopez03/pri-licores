@@ -21,13 +21,8 @@ const InventoryPage = () => {
 
 
     const bringInformation = async () => {
-        const storeToken = localStorage.getItem("userToken");
-        const apiOptions = {
-            headers: {
-                authorization: `Bearer ${storeToken}` 
-            }
-        }
-        const bringProducts = await axios.get(ENDPOINT.GET_PRODUCTS, apiOptions);
+        const token = getToken();
+        const bringProducts = await axios.get(ENDPOINT.GET_PRODUCTS, token);
         setItems(bringProducts.data);
     }
     useEffect( () => {
