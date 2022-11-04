@@ -176,6 +176,13 @@ input[type=number] {
   background-color: #dbb82d;
 }
 
+.modal-content .modal-user-name {
+  box-shadow: 1px 1px 8px 5px white;
+  border-radius: 20px;
+  padding: 7px 12px;
+  color: #6c540e;
+}
+
 /* MOBILE STYLES */
 
 @media (max-width: 700px){
@@ -184,8 +191,12 @@ input[type=number] {
     width: 330px;
   }
 
-  .t-responsive {
+  .t-responsive-large {
     width: 660px;
+  }
+
+  .t-responsive-medium {
+    width: 580px;
   }
 
   .cashier-form {
