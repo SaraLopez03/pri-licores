@@ -107,6 +107,10 @@
   color: white;
 }
 
+table .row-click {
+  cursor: pointer;
+}
+
 /* CASHIER */
 
 .cashier-select {

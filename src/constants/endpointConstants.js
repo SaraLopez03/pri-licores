@@ -7,5 +7,6 @@ export const ENDPOINT = {
     PUT_UPDATE_PRODUCT: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/product",
     DEL_DELETE_PRODUCT: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/product",
     NEW_SALE: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/sale",
-    OPEN_SALES: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/sales-open"
+    OPEN_SALES: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/sales-open",
+    UPDATE_SALE: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/update-sale"
 }

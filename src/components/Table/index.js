@@ -2,7 +2,7 @@ import React from "react";
 import TableCell from "./component/TableCell";
 
 
-const Table = ({columnNames, fixSize, items}) => {
+const Table = ({columnNames, items, fixSize, itemClick}) => {
     return(
         <div className="table-responsive">
              <table className={`table table-hover ${fixSize ? 't-responsive' : ''}`}>
@@ -20,7 +20,7 @@ const Table = ({columnNames, fixSize, items}) => {
                 <tbody>
                     {
                         items.length ?
-                            items.map((item,index) => <tr key={index}>
+                            items.map((item,index) => <tr key={index} className={`${itemClick && 'row-click'}`} onClick={itemClick ? () => itemClick(item) : undefined}>
                                                     {
                                                         columnNames.map((column, index) => 
                                                             <TableCell key={index} value={item[column.key]} columnConfig={column} item={item}/>

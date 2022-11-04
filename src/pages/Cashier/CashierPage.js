@@ -3,10 +3,15 @@ import CashierForm from "./components/CashierForm";
 import { ENDPOINT } from "../../constants/endpointConstants";
 import CashierOpenSales from "./components/CashierOpenSales";
 import { useEffect, useState } from "react";
+import { Modal, ModalBody } from "react-bootstrap";
+import { getToken } from "../../utils/utils";
 
 const CashierPage = () => {
 
     const [openSales, setOpenSales] = useState([]);
+    const [showUpdateSale, setShowUpdateSale] = useState(false);
+    const [saleToUpdate, setSaleToUpdate] = useState('');
+    const [productsToUpdate, setProductsToUpdate] = useState(undefined);
 
     useEffect(() => {
         getOpenSale()
@@ -14,13 +19,8 @@ const CashierPage = () => {
 
     const getOpenSale = async () => {
         try {
-            const storeToken = localStorage.getItem("userToken");
-            const apiOptions = {
-                headers: {
-                    authorization: `Bearer ${storeToken}` 
-                }
-        }
-            const response = await axios.get(ENDPOINT.OPEN_SALES,apiOptions)
+            const token = getToken();
+            const response = await axios.get(ENDPOINT.OPEN_SALES, token)
             setOpenSales(response.data);
         } catch (error) {
         }
@@ -36,6 +36,34 @@ const CashierPage = () => {
         newOpenSales = newOpenSales.sort((a,b) => b.date - a.date);
         setOpenSales(newOpenSales);
     }
+
+    const getProductsToUpdate = (saleUpdated) => {
+        
+        const saleIndex = openSales.findIndex(sale => sale.saleId === saleUpdated.saleId);
+        let newSales = [... openSales];
+        
+        newSales[saleIndex] = saleUpdated;
+
+        setOpenSales(newSales);
+        closeUpdateModal();
+    }
+
+    const closeUpdateModal = () => setShowUpdateSale(false);
+
+    const clickOpenSale = sale => {
+        let productsFromTable = [... sale.saleProducts];
+        productsFromTable = productsFromTable.map(product => ({
+            ... product,
+            total: product.amount * product.productPrice
+        }))
+        setSaleToUpdate({
+            userName: sale.clientName,
+            saleId: sale.saleId,
+            totalPrice: sale.totalPrice
+        });
+        setProductsToUpdate(productsFromTable);
+        setShowUpdateSale(true);
+    }
     
 
     return (
@@ -44,10 +72,16 @@ const CashierPage = () => {
                 <div className="col-12 col-md-6">
                     <CashierForm buttonAction={getCurrentProducts}/>
                 </div>
-                <div className="col-12 col-md-6 mt-md-0 mt-5">
-                    <CashierOpenSales sales={openSales}/>
+                <div className="col-12 col-md-6 mt-5 mt-md-0">
+                    <CashierOpenSales sales={openSales} itemClick={clickOpenSale}/>
                 </div>
             </div>
+            <Modal show={showUpdateSale} onHide={closeUpdateModal} size="lg">
+                <ModalBody>
+                    <CashierForm buttonAction={getProductsToUpdate} saleToUpdate={saleToUpdate} productsToUpdate={productsToUpdate}/>
+                </ModalBody>
+
+            </Modal>
         </div>
       
     )
