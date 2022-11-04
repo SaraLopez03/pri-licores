@@ -65,6 +65,10 @@ const CashierPage = () => {
         setShowUpdateSale(true);
     }
     
+    const paySale = (saleId) => {
+        setOpenSales(openSales.filter(sale => sale.saleId != saleId));
+    }
+    
 
     return (
         <div>
@@ -72,8 +76,8 @@ const CashierPage = () => {
                 <div className="col-12 col-md-6">
                     <CashierForm buttonAction={getCurrentProducts}/>
                 </div>
-                <div className="col-12 col-md-6 mt-5 mt-md-0">
-                    <CashierOpenSales sales={openSales} itemClick={clickOpenSale}/>
+                <div className="col-12 col-md-6 mt-md-0 mt-5">
+                    <CashierOpenSales sales={openSales} itemClick={clickOpenSale} paySaleParent={paySale}/>
                 </div>
             </div>
             <Modal show={showUpdateSale} onHide={closeUpdateModal} size="lg">
