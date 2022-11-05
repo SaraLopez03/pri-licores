@@ -21,13 +21,8 @@ const InventoryPage = () => {
 
 
     const bringInformation = async () => {
-        const storeToken = localStorage.getItem("userToken");
-        const apiOptions = {
-            headers: {
-                authorization: `Bearer ${storeToken}` 
-            }
-        }
-        const bringProducts = await axios.get(ENDPOINT.GET_PRODUCTS, apiOptions);
+        const token = getToken();
+        const bringProducts = await axios.get(ENDPOINT.GET_PRODUCTS, token);
         setItems(bringProducts.data);
     }
     useEffect( () => {
@@ -261,7 +256,7 @@ const InventoryPage = () => {
             <div className ="mx-4">
                 <h1 className="style-title-page mt-4">Inventario</h1>
                 <button type="button" className="btn btn-primary btn-sm mt-5" data-bs-target="#modal" onClick={showModalNewProduct}> <i className="fa-solid fa-plus"></i> Agregar producto </button>
-                <Table columnNames={inventoryColumns} items={items} fixSize={true}/>
+                <Table columnNames={inventoryColumns} items={items} fixSize={'t-responsive-large'}/>
             </div>
             <Modal show={newProduct} onHide={modalClose}>
                 <Modal.Header closeButton className="style-modal-header">
