@@ -30,7 +30,7 @@ const NavBar = ({name}) => {
                         <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">   
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <NavLink className= "nav-link style-nav-link" to="/caja" >CAJA </NavLink>
+                                    <NavLink className= "nav-link style-nav-link" to="/caja">CAJA </NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <NavLink className="nav-link style-nav-link" to="/inventario" >INVENTARIO </NavLink>

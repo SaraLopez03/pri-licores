@@ -175,6 +175,35 @@ input[type=number] {
 .react-datepicker .react-datepicker__day--in-range{
   background-color: #dbb82d;
 }
+/* CLOSED CASHIER */
+
+.cards-closed{
+  width: max-content;
+  align-items: center;
+  border-radius: 19px;
+  box-shadow:  1px 1px 8px 2px #dbb82d;
+  padding: 10px 9px;
+}
+
+.cards-closed p{
+  margin-bottom: 0;
+}
+
+.cards-closed p span{
+  font-weight: normal;
+}
+
+.style-buttom-closed{
+  font-size: 15px;
+}
+
+.button-closed{
+  padding: 0px 37px;
+}
+
+.yellow-color{
+  color:#dbb82d;
+}
 
 .modal-content .modal-user-name {
   box-shadow: 1px 1px 8px 5px white;
