@@ -5,7 +5,7 @@ import TableCell from "./component/TableCell";
 const Table = ({columnNames, items, fixSize, itemClick}) => {
     return(
         <div className="table-responsive">
-             <table className={`table table-hover ${fixSize ? 't-responsive' : ''}`}>
+             <table className={`table table-hover ${fixSize || ''}`}>
                 <thead>
                     <tr>
                         {
