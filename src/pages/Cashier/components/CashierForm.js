@@ -19,6 +19,7 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
     const [totalSale, setTotalSale] = useState(saleToUpdate?.totalPrice ? saleToUpdate.totalPrice : 0);
     const [userName, setUserName] = useState(saleToUpdate?.userName ? saleToUpdate.userName : '');
     const [isLoading, setIsLoading] = useState(false);
+    let isFormDisabled = false;
 
     useEffect(() => {
         getProducts();
@@ -139,7 +140,7 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
         setTotalSale(sumSale);
     }
 
-    const isButtonDisabled = () => products.some(product => !product.productId || !product.amount)
+    const isButtonDisabled = () => isFormDisabled || products.some(product => !product.productId || !product.amount)
 
     const isRemoveButtonDisabled = () => products.length && (products.length - 1)
 
@@ -150,6 +151,19 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
             return <button type="button" className="btn btn-table btn-sm px-2 py-1" onClick={updateSale} disabled={isButtonDisabled()}> ACTUALIZAR </button>
         } else {
             return <button type="button" className="btn btn-table btn-sm px-2 py-1" onClick={sendProducts} disabled={isButtonDisabled()}> AGREGAR </button>
+        }
+    }
+
+    const isAmountValid = (product) => {
+        if (!product) {
+            return
+        }
+        const inventoryProduct = currentProducts.find(currentProduct => currentProduct.productId === product.productId);
+        if (inventoryProduct && product.amount > inventoryProduct.amount) {
+            isFormDisabled = true;
+            return true
+        } else {
+            return false
         }
     }
 
@@ -180,7 +194,7 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
                                     </select>
                                 </div>
                                 <div className="col-2">
-                                    <input type="number" className='form-control' placeholder="0" value={product.amount} onChange={(e) => amountOnChange(e, index)}/>
+                                    <input type="number" className={`form-control ${isAmountValid(product) && 'invalid-input'}`} placeholder="0" value={product.amount} onChange={(e) => amountOnChange(e, index)}/>
                                 </div>
                                 <div className="col-3">
                                     {"$" + new Intl.NumberFormat('es-CL').format(product.total)}
