@@ -33,8 +33,15 @@ const  SalesPages = () => {
         }
         const token = getToken()
         try {
-            const submitDateSale = await axios.post(ENDPOINT.POST_SALES_BY_DATES,statusDate,token)
-            setSalesInformations(submitDateSale.data)
+            const {data} = await axios.post(ENDPOINT.POST_SALES_BY_DATES,statusDate,token)
+            const formattedData = {
+                ...data,
+                sales: data.sales.map(sale => ({
+                    ...sale,
+                    onCharge: sale.auditInfo?.userName
+                }))
+            }
+            setSalesInformations(formattedData)
         } catch (error) {
 
         }
@@ -77,6 +84,11 @@ const  SalesPages = () => {
             name: "Metodo Pago",
             key: "paymentMethodId",
             type: "paymentMethod"
+        },
+        {
+            name: "Encargado",
+            key: "onCharge",
+            type: "text"
         },
     ];
 

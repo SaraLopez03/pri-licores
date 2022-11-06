@@ -7,10 +7,11 @@ import { useState } from 'react';
 import InventoryPage from './pages/Inventory/InventoryPage';
 import SalesPage from './pages/Sales/SalesPage';
 import ClosedCashierPage from './pages/ClosedCashier/ClosedCashierPage';
+import { getUserData } from './utils/utils';
 
 
 function App() {
-  const[name, setName] = useState("");
+  const[name, setName] = useState(getUserData()?.name || '');
 
   const getName = (userName) => {
     setName(userName)

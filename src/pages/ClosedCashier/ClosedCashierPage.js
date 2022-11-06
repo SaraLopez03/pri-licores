@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle } from "react-bootstrap";
 import Table from "../../components/Table";
 import { ENDPOINT } from "../../constants/endpointConstants";
-import { getToken } from "../../utils/utils"
+import { getToken, getUserData } from "../../utils/utils"
 import CloseCashierCard  from "./components/CloseCashierCard";
 
 
@@ -71,7 +71,8 @@ const ClosedCashier = () => {
         try {
             const token = getToken();
             setIsLoading(true);
-            const response = await axios.post(ENDPOINT.CLOSE_PENDING_SALES,{},token);
+            const {userId, name} = getUserData();
+            const response = await axios.post(ENDPOINT.CLOSE_PENDING_SALES,{userId, name},token);
             setItemsClosedCashier([]);
             console.log({defaultCards});
             setCashierData(defaultCards);

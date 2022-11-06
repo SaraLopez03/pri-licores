@@ -21,10 +21,15 @@ const LoginPage = ({bringUser}) => {
         }
         setLoading(true); 
         try{
-            const submitUser = await axios.post(ENDPOINT.POST_LOGIN,addUser); 
+            let submitUser = await axios.post(ENDPOINT.POST_LOGIN,addUser); 
+            const {token, name, userId} = submitUser.data;
             setLoading(false)
-            localStorage.setItem("userToken",submitUser.data.token)
-            bringUser(submitUser.data.name)
+            localStorage.setItem('prilicores-user', JSON.stringify({
+                token,
+                name,
+                userId
+            }))
+            bringUser(name)
             navigate("caja")
         } catch(error){
             setLoginError(true)
