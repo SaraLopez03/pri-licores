@@ -146,7 +146,11 @@ const InventoryPage = () => {
     }
 
     const isButtonDisabled = () => {
-        if(nameProduct === "" || isValidInputNumber(amount) || isValidInputNumber(purchasePrice) || isValidInputNumber(salePrice)){
+        if( nameProduct === "" ||
+            isValidInputNumber(amount) ||
+            isValidInputNumber(purchasePrice) ||
+            isValidInputNumber(salePrice) ||
+            salePrice < purchasePrice){
             return true
         } else {
             return false
