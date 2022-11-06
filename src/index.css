@@ -121,6 +121,11 @@ table .row-click {
   font-weight: bold;
 }
 
+.cashier-form .invalid-input {
+  border-color: red;
+  box-shadow: none;
+}
+
 
 /* GLOBAL */
 
