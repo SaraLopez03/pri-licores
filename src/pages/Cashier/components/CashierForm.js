@@ -102,6 +102,7 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
             buttonAction(response.data);
             setProducts(defaultProducts);
             setUserName('');
+            setTotalSale(0);
         } catch (error) {
             setIsLoading(false);
         }
