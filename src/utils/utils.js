@@ -1,6 +1,10 @@
+export const getUserData = () => {
+    const user = localStorage.getItem("prilicores-user");
+    return JSON.parse(user);
+}
 
 export const getToken = () => {
-    const token = localStorage.getItem("userToken");
+    const token = getUserData().token;
     const extraOptions = {
         headers: {
             authorization: `Bearer ${token}` 
