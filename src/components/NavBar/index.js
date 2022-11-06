@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../assets/Logo-pri-licores.png";
-import {useNavigate,useLocation, NavLink} from "react-router-dom";
+import {useNavigate,useLocation, Link} from "react-router-dom";
 
 
 const NavBar = ({name}) => {
     const navigate = useNavigate ();
+    const [closeMenu, setCloseMenu] = useState(false);
 
     let location = useLocation();
 
@@ -12,6 +13,13 @@ const NavBar = ({name}) => {
         localStorage.removeItem("userToken")
         navigate("")
     }
+
+    const onCli = () => {
+        console.log('CLICK');
+        setCloseMenu(true)
+    }
+
+    
 
     const showNavBar = () => {
         if(location.pathname === "/"){
@@ -27,19 +35,19 @@ const NavBar = ({name}) => {
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
-                        <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">   
+                        <div className={`collapse navbar-collapse justify-content-end`} id="navbarNavAltMarkup">   
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <NavLink className= "nav-link style-nav-link" to="/caja">CAJA </NavLink>
+                                    <Link className= "nav-link style-nav-link" to="/caja">CAJA </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link style-nav-link" to="/inventario" >INVENTARIO </NavLink>
+                                    <Link className="nav-link style-nav-link" to="/inventario" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" onClick={onCli}>INVENTARIO </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link style-nav-link" to="/total-ventas" >TOTAL VENTAS </NavLink>
+                                    <Link className="nav-link style-nav-link" to="/total-ventas" >TOTAL VENTAS </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link style-nav-link" to="/cierre-caja" >CIERRE CAJA </NavLink>
+                                    <Link className="nav-link style-nav-link" to="/cierre-caja" >CIERRE CAJA </Link>
                                 </li>
                                 <li className="nav-item">
                                     <button className="nav-link logout style-nav-link" >
