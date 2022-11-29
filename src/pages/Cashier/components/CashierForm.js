@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ENDPOINT } from "../../../constants/endpointConstants"
 import axios from 'axios';
 import { getToken } from "../../../utils/utils";
+import Select from 'react-select';
 
 const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
     const defaultProducts = [
@@ -29,6 +30,16 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
         const token = getToken();
         const response = await axios.get(ENDPOINT.GET_PRODUCTS, token);
         setCurrentProducts(response.data);
+        console.log(currentProducts)
+
+        const array = [];
+        for (let i = 0; i < array.length; i++) {
+            const newFilter = { 
+                value: currentProducts[i].productId,
+                label: currentProducts[i].name 
+            };
+            console.log(newFilter)
+        }
     }
 
     const addNewProduct = () => {
@@ -167,6 +178,12 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
         }
     }
 
+    const filter = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' }
+    ]
+
     return (
         <div className="cashier-form">
             <div className="row">
@@ -184,14 +201,14 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
                         products.map((product, index) =>
                             <div className="row align-items-center mt-2" key={index}>
                                 <div className={`col-6`}>
-                                    <select className="form-select cashier-select" value={product.productId} onChange={(e) => productOnChange(e, index)}>
-                                        <option value="" disabled>Seleccione un producto</option>
+                                    <Select options={filter} placeholder="Seleccione un producto" onChange={(e) => productOnChange(e, index)}>
+                                        {/* <option value="" disabled>Seleccione un producto</option>
                                         {
                                             currentProducts.length ?
                                             currentProducts.map((product, i) => <option value={product.productId} key={i}>{product.name}</option>):
                                             null
-                                        }
-                                    </select>
+                                        } */}
+                                    </Select>
                                 </div>
                                 <div className="col-2">
                                     <input type="number" className={`form-control ${isAmountValid(product) && 'invalid-input'}`} placeholder="0" value={product.amount} onChange={(e) => amountOnChange(e, index)}/>
