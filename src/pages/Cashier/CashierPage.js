@@ -12,6 +12,7 @@ const CashierPage = () => {
     const [showUpdateSale, setShowUpdateSale] = useState(false);
     const [saleToUpdate, setSaleToUpdate] = useState('');
     const [productsToUpdate, setProductsToUpdate] = useState(undefined);
+    const [isLoadingOpenSale, setIsLoadingOpenSale] = useState(false);
 
     useEffect(() => {
         getOpenSale()
@@ -20,9 +21,12 @@ const CashierPage = () => {
     const getOpenSale = async () => {
         try {
             const token = getToken();
+            setIsLoadingOpenSale(true);
             const response = await axios.get(ENDPOINT.OPEN_SALES, token)
             setOpenSales(response.data);
+            setIsLoadingOpenSale(false);
         } catch (error) {
+            setIsLoadingOpenSale(false);
         }
     }
 
@@ -77,7 +81,7 @@ const CashierPage = () => {
                     <CashierForm buttonAction={getCurrentProducts}/>
                 </div>
                 <div className="col-12 col-md-6 mt-md-0 mt-5">
-                    <CashierOpenSales sales={openSales} itemClick={clickOpenSale} paySaleParent={paySale}/>
+                    <CashierOpenSales sales={openSales} itemClick={clickOpenSale} paySaleParent={paySale} isLoading={isLoadingOpenSale}/>
                 </div>
             </div>
             <Modal show={showUpdateSale} onHide={closeUpdateModal} size="lg">

@@ -37,6 +37,7 @@ const ClosedCashier = () => {
     const [cashierData, setCashierData] = useState([...defaultCards]);
     const[closeSales,setCloseSales] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingSales, setIsLoadingSales] = useState(false);
 
     useEffect(() => {
         getPendingSales();
@@ -45,6 +46,7 @@ const ClosedCashier = () => {
     const getPendingSales = async () => {
         try {
             const token = getToken();
+            setIsLoadingSales(true);
             const response = await axios.get(ENDPOINT.GET_PENDING_SALES, token);
             const {sales, profit, total, transferAmount, cashAmount} = response.data;
             setItemsClosedCashier(sales);
@@ -54,8 +56,11 @@ const ClosedCashier = () => {
             newCashierData[1][0].value = cashAmount;
             newCashierData[1][1].value = transferAmount;
             setCashierData(newCashierData);
+            setIsLoadingSales(false);
+
         } catch (error) {
             console.log('ERROR GETTING PENDING SALE');
+            setIsLoadingSales(false);
         }
     }
 
@@ -127,7 +132,7 @@ const ClosedCashier = () => {
             <div className="row justify-content-between">
                 <div className="col-md-8 col-12 order-1 order-md-0">
                     <div className="mt-5"> 
-                        <Table columnNames={columnClosedCashier} items={itemsClosedCashier} fixSize={'t-responsive-medium'}/>
+                        <Table columnNames={columnClosedCashier} items={itemsClosedCashier} fixSize={'t-responsive-medium'} isLoading={isLoadingSales}/>
                     </div>
                 </div>
                 <div className="col-md-3 col-12 mt-md-5 mt-4">

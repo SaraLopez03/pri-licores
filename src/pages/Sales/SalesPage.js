@@ -17,6 +17,7 @@ const  SalesPages = () => {
         profit: 0,
         total: 0
     });
+    const [isLoadingSales, setIsLoadingSales] = useState(false)
 
     const datePickerOnChange = (update) => {
         setDateRange(update)
@@ -33,6 +34,7 @@ const  SalesPages = () => {
         }
         const token = getToken()
         try {
+            setIsLoadingSales(true);
             const {data} = await axios.post(ENDPOINT.POST_SALES_BY_DATES,statusDate,token)
             const formattedData = {
                 ...data,
@@ -42,8 +44,9 @@ const  SalesPages = () => {
                 }))
             }
             setSalesInformations(formattedData)
+            setIsLoadingSales(false);
         } catch (error) {
-
+            setIsLoadingSales(false);
         }
     }
     useEffect( () => {
@@ -161,7 +164,7 @@ const  SalesPages = () => {
                     </div>
                     <div className="row mt-5">
                         <div className="col-md-9">
-                            <Table columnNames={salesColumns} items={salesInformations.sales?salesInformations.sales:[]} fixSize={'t-responsive-medium'} itemClick={saleClick}/>
+                            <Table columnNames={salesColumns} items={salesInformations.sales ? salesInformations.sales : []} fixSize={'t-responsive-medium'} itemClick={saleClick} isLoading={isLoadingSales}/>
                         </div>
                     </div>
                 </div>
