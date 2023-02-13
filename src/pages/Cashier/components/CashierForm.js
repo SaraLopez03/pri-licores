@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ENDPOINT } from "../../../constants/endpointConstants"
 import axios from 'axios';
 import { getToken } from "../../../utils/utils";
+import ErrorModal from "../../../components/ErrorModal";
 
 const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
     const defaultProducts = [
@@ -220,7 +221,8 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
                 <div className="col-3">
                     {buttonContent()}
                 </div>
-            </div> 
+            </div>
+            <ErrorModal></ErrorModal>
         </div>
     )
 }

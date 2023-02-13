@@ -6,7 +6,7 @@ import { ENDPOINT } from "../../../constants/endpointConstants";
 import { getToken } from "../../../utils/utils";
 
 
-const CashierOpenSales = ({sales, itemClick, paySaleParent}) => {
+const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
     const[paySaleModal, setPaySaleModal] = useState(false);
     const[saleId, setSaleId] = useState("");
     const[paymentMethodId, setPaymentMethodId] = useState(0);
@@ -118,7 +118,7 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent}) => {
                 <h2>Pedidos Abiertos</h2>
             </div>
             <div className="row ps-md-5 ps-0 mt-4">
-                <Table columnNames={openSalesColumn} items={sales} itemClick={itemClick}/>
+                <Table columnNames={openSalesColumn} items={sales} itemClick={itemClick} isLoading={isLoading}/>
             </div>
             <Modal show={paySaleModal} onHide={closePaySale}>
                 <ModalBody>

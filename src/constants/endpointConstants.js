@@ -1,15 +1,20 @@
+const env = process.env.NODE_ENV;
+const api_urls = {
+    local: 'http://localhost:9090',
+    prod: 'https://um4ajvns2b.execute-api.us-west-2.amazonaws.com'
+}
 
 export const ENDPOINT = {
-    POST_LOGIN: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/user/login",
-    POST_NEW_PRODUCT: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/product",
-    POST_SALES_BY_DATES: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/sale-by-dates",
-    GET_PRODUCTS: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/product",
-    PUT_UPDATE_PRODUCT: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/product",
-    DEL_DELETE_PRODUCT: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/product",
-    NEW_SALE: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/sale",
-    OPEN_SALES: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/sales-open",
-    UPDATE_SALE: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/update-sale",
-    POST_PAY_SALE: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/pay-open-sale",
-    GET_PENDING_SALES: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/sales-pending",
-    CLOSE_PENDING_SALES: "https://um4ajvns2b.execute-api.us-west-2.amazonaws.com/dev/close-sales-pending"
+    POST_LOGIN: `${api_urls[env] || api_urls.local || api_urls.local}/dev/user/login`,
+    POST_NEW_PRODUCT: `${api_urls[env] || api_urls.local || api_urls.local}/dev/product`,
+    POST_SALES_BY_DATES: `${api_urls[env] || api_urls.local}/dev/sale-by-dates`,
+    GET_PRODUCTS: `${api_urls[env] || api_urls.local}/dev/product`,
+    PUT_UPDATE_PRODUCT: `${api_urls[env] || api_urls.local}/dev/product`,
+    DEL_DELETE_PRODUCT: `${api_urls[env] || api_urls.local}/dev/product`,
+    NEW_SALE: `${api_urls[env] || api_urls.local}/dev/sale`,
+    OPEN_SALES: `${api_urls[env] || api_urls.local}/dev/sales-open`,
+    UPDATE_SALE: `${api_urls[env] || api_urls.local}/dev/update-sale`,
+    POST_PAY_SALE: `${api_urls[env] || api_urls.local}/dev/pay-open-sale`,
+    GET_PENDING_SALES: `${api_urls[env] || api_urls.local}/dev/sales-pending`,
+    CLOSE_PENDING_SALES: `${api_urls[env] || api_urls.local}/dev/close-sales-pending`
 }

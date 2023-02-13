@@ -17,13 +17,16 @@ const InventoryPage = () => {
     const[salePrice, setSalePrice] = useState('');
     const[isUpdateModal, setIsUpdateModal] = useState(false);
     const[productId, setProductId] = useState('');
+    const[isLoadingInventory, setIsLoadingInventory] = useState(false);
 
 
 
     const bringInformation = async () => {
         const token = getToken();
+        setIsLoadingInventory(true);
         const bringProducts = await axios.get(ENDPOINT.GET_PRODUCTS, token);
         setItems(bringProducts.data);
+        setIsLoadingInventory(false);
     }
     useEffect( () => {
         bringInformation();
@@ -260,7 +263,7 @@ const InventoryPage = () => {
             <div className ="mx-4">
                 <h1 className="style-title-page mt-4">Inventario</h1>
                 <button type="button" className="btn btn-primary btn-sm mt-5" data-bs-target="#modal" onClick={showModalNewProduct}> <i className="fa-solid fa-plus"></i> Agregar producto </button>
-                <Table columnNames={inventoryColumns} items={items} fixSize={'t-responsive-large'}/>
+                <Table columnNames={inventoryColumns} items={items} fixSize={'t-responsive-large'} isLoading={isLoadingInventory}/>
             </div>
             <Modal show={newProduct} onHide={modalClose}>
                 <Modal.Header closeButton className="style-modal-header">

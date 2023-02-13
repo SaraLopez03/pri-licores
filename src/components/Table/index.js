@@ -2,7 +2,7 @@ import React from "react";
 import TableCell from "./component/TableCell";
 
 
-const Table = ({columnNames, items, fixSize, itemClick}) => {
+const Table = ({columnNames, items, fixSize, itemClick, isLoading}) => {
     return(
         <div className="table-responsive">
              <table className={`table table-hover ${fixSize || ''}`}>
@@ -19,6 +19,8 @@ const Table = ({columnNames, items, fixSize, itemClick}) => {
                 </thead>
                 <tbody>
                     {
+                        isLoading ? 
+                            <tr><td colSpan={"100%"}><span className="spinner-border spinner-border-sm yellow-color" role="status" aria-hidden="true"></span></td></tr> :
                         items.length ?
                             items.map((item,index) => <tr key={index} className={`${itemClick && 'row-click'}`} onClick={itemClick ? () => itemClick(item) : undefined}>
                                                     {
