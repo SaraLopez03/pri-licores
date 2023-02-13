@@ -1,6 +1,7 @@
 const env = process.env.NODE_ENV;
 const api_urls = {
-    local: 'http://localhost:9090',
+    // local: 'http://localhost:9090',
+    local: 'https://um4ajvns2b.execute-api.us-west-2.amazonaws.com',
     prod: 'https://um4ajvns2b.execute-api.us-west-2.amazonaws.com'
 }
 
