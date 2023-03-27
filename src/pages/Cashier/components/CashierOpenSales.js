@@ -13,6 +13,7 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
     const[totalPrice, setTotalPrice] = useState(0);
     const[valueReceibed, setValueReceibed] = useState(0);
     const[loading, setLoading] = useState(false);
+    const[errorMsg, setErrorMsg] = useState('');
 
 
     const paySale = sale => {
@@ -22,6 +23,8 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
     }
 
     const closePaySale = () => {
+        setErrorMsg('');
+        setValueReceibed(0);
         setPaySaleModal(false)
     }
 
@@ -54,7 +57,8 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
             setLoading(false);
             setValueReceibed(0);
         } catch (error) {
-            console.log(error)
+            setLoading(false);
+            setErrorMsg(error.response.data.code);
         }
     }
 
@@ -67,9 +71,11 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
     }
 
     const isButtonDisabled = () =>{
-        if(paymentMethodId === 1){
+        if (errorMsg) {
+            return true;
+        } else if(paymentMethodId === 1){
             return false;
-        }else if(valueReceibed < totalPrice){
+        } else if(valueReceibed < totalPrice){
             return true;
         } else{
             return false;
@@ -154,6 +160,11 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
                             <p className="mb-0"> {"$" + new Intl.NumberFormat('es-CL').format(operationChange())}</p>
                         </div>}
                     </div>
+                    {errorMsg && 
+                        <div className="row mt-4">
+                            <p className="error-msg">{errorMsg}</p>
+                        </div>
+                    }
                 </ModalBody>
             </Modal>
         </div>
