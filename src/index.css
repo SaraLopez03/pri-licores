@@ -217,6 +217,10 @@ input[type=number] {
   color: #6c540e;
 }
 
+.error-msg {
+  color: red;
+}
+
 /* MOBILE STYLES */
 
 @media (max-width: 700px){
