@@ -35,7 +35,7 @@ const CashierPage = () => {
     }
 
     const createNewSale = async (newSale) => {
-        let newOpenSales = [... openSales];
+        let newOpenSales = [...openSales];
         newOpenSales.push(newSale)
         newOpenSales = newOpenSales.sort((a,b) => b.date - a.date);
         setOpenSales(newOpenSales);
@@ -44,7 +44,7 @@ const CashierPage = () => {
     const getProductsToUpdate = (saleUpdated) => {
         
         const saleIndex = openSales.findIndex(sale => sale.saleId === saleUpdated.saleId);
-        let newSales = [... openSales];
+        let newSales = [...openSales];
         
         newSales[saleIndex] = saleUpdated;
 
@@ -55,9 +55,9 @@ const CashierPage = () => {
     const closeUpdateModal = () => setShowUpdateSale(false);
 
     const clickOpenSale = sale => {
-        let productsFromTable = [... sale.saleProducts];
+        let productsFromTable = [...sale.saleProducts];
         productsFromTable = productsFromTable.map(product => ({
-            ... product,
+            ...product,
             total: product.amount * product.productPrice
         }))
         setSaleToUpdate({
@@ -70,7 +70,7 @@ const CashierPage = () => {
     }
     
     const paySale = (saleId) => {
-        setOpenSales(openSales.filter(sale => sale.saleId != saleId));
+        setOpenSales(openSales.filter(sale => sale.saleId !== saleId));
     }
     
 

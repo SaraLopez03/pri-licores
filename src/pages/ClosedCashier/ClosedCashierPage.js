@@ -41,6 +41,7 @@ const ClosedCashier = () => {
 
     useEffect(() => {
         getPendingSales();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getPendingSales = async () => {
@@ -77,7 +78,7 @@ const ClosedCashier = () => {
             const token = getToken();
             setIsLoading(true);
             const {userId, name} = getUserData();
-            const response = await axios.post(ENDPOINT.CLOSE_PENDING_SALES,{userId, name},token);
+            await axios.post(ENDPOINT.CLOSE_PENDING_SALES,{userId, name},token);
             setItemsClosedCashier([]);
             console.log({defaultCards});
             setCashierData(defaultCards);

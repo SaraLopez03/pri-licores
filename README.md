@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## CI/CD
+
+This project uses a Jenkins pipeline (see `Jenkinsfile`) to build the React app and deploy to S3/CloudFront on merge to `main`.
+
 ## Available Scripts
 
 In the project directory, you can run:

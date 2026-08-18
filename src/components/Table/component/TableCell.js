@@ -1,11 +1,10 @@
-import { Button } from "react-bootstrap";
 import { PAYMENT_METHOD } from "../../../constants/sharedConstans";
 
 const TableCell = ({ value, columnConfig, item }) => {
   const checkType = () => {
-    if (columnConfig.type == "currency") {
+    if (columnConfig.type === "currency") {
       return <td> {"$" + new Intl.NumberFormat("es-CL").format(value)} </td>;
-    } else if (columnConfig.type == "actions") {
+    } else if (columnConfig.type === "actions") {
       return (
         <td>
           {columnConfig.buttons
@@ -27,10 +26,10 @@ const TableCell = ({ value, columnConfig, item }) => {
             })}
         </td>
       );
-    } else if (columnConfig.type == "date") {
+    } else if (columnConfig.type === "date") {
       let formatDay = new Date(value);
       return <td> {formatDay.toLocaleDateString("es-CL")} </td>;
-    } else if (columnConfig.type == "paymentMethod") {
+    } else if (columnConfig.type === "paymentMethod") {
       return <td> {PAYMENT_METHOD[value]}</td>;
     } else {
       return <td> {value} </td>;
