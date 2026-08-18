@@ -7,7 +7,6 @@ import { getRangeDates, getToken } from "../../utils/utils";
 import { Modal } from "react-bootstrap";
 
 const  SalesPages = () => {
-    const[items, setItems] = useState([]);
     const [dateRange, setDateRange] = useState(getRangeDates(new Date(), new Date()));
     const [startDate, endDate] = dateRange;
     const [showDetailModal, setShowDetailModal] = useState(false)
@@ -51,6 +50,7 @@ const  SalesPages = () => {
     }
     useEffect( () => {
         bringDate(startDate.getTime(),endDate.getTime());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const closeDetailModal = () => {
@@ -58,9 +58,9 @@ const  SalesPages = () => {
     }
 
     const saleClick = sale => {
-        let formattedSale = {... sale};
+        let formattedSale = {...sale};
         formattedSale.saleProducts = formattedSale.saleProducts.map(product => ({
-            ... product,
+            ...product,
             total: product.amount * product.productPrice
         }))
         setSaleSelected(formattedSale);

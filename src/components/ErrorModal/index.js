@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, ModalBody } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 const ErrorModal = ({message, showErrorModal, closeModal}) => {
   return (

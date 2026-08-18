@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Table from "../../components/Table";
-import { Modal, ModalBody, ModalFooter } from "react-bootstrap";
+import { Modal, ModalBody } from "react-bootstrap";
 import { ENDPOINT } from "../../constants/endpointConstants";
 import axios from "axios";
 import { useEffect } from "react";
@@ -110,7 +110,7 @@ const InventoryPage = () => {
     token.data = putOffProduct;
     setLoading(true);
     try {
-      const submitDeleteProduct = await axios.delete(
+      await axios.delete(
         ENDPOINT.DEL_DELETE_PRODUCT,
         token
       );

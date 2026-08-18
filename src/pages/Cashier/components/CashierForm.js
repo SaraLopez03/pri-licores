@@ -34,7 +34,7 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
 
     const addNewProduct = () => {
         setProducts([
-            ... products,
+            ...products,
             {
                 productId: '',
                 productName: '',
@@ -47,11 +47,11 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
     }
 
     const amountOnChange = ($event, index) => {
-        let newProducts = [... products];
+        let newProducts = [...products];
         const amount = parseInt($event.target.value);
         const productId = newProducts[index].productId;
         newProducts[index] = {
-            ... newProducts[index],
+            ...newProducts[index],
             amount,
             total: productId && amount ? calculateTotalProduct(productId, amount) : 0
         }
@@ -64,7 +64,7 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
         if (products.some(product => product.productId === productId)) {
             return;
         }
-        let newProducts = [... products];
+        let newProducts = [...products];
         const productSelected = currentProducts.find(product => product.productId === productId)
         newProducts[index] = {
             productId,
@@ -78,7 +78,7 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
     }
 
     const removeProduct = (index) => {
-        let newProducts = [... products];
+        let newProducts = [...products];
         newProducts.splice(index, 1);
         calculateTotalSale(newProducts);
         setProducts(newProducts);
@@ -91,7 +91,7 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
 
     const sendProducts = async () => {
         const payload = {
-            date: (new Date).getTime(),
+            date: new Date().getTime(),
             clientName: userName ? userName : "Cliente",
             saleProducts: products,
             status: 0

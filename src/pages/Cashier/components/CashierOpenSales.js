@@ -51,7 +51,7 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
         const token = getToken();
         try {
             setLoading(true);
-            const submitSale = await axios.post(ENDPOINT.POST_PAY_SALE,sale,token)
+            await axios.post(ENDPOINT.POST_PAY_SALE,sale,token)
             paySaleParent(sale.saleId);
             setPaySaleModal(false);
             setLoading(false);

@@ -21,7 +21,7 @@ const NavBar = ({name}) => {
                 <nav className="navbar navbar-expand-lg style-nav">
                     <div className="container-fluid">
                         <div className="d-flex align-items-center">
-                            <img className="navbar-brand style-nav-logo" src= {logo}/>
+                            <img className="navbar-brand style-nav-logo" src= {logo} alt="logo"/>
                             <p className="style-name"> {name} </p>
                         </div>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">

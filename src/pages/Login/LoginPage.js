@@ -81,7 +81,7 @@ const LoginPage = ({ bringUser }) => {
     <div>
       <div className="row justify-content-center">
         <div className="login col-10 col-md-4">
-          <img src={logo} />
+          <img src={logo} alt="logo" />
           <div className="row justify-content-center">
             <div className=" col-8 mb-3">
               <input
