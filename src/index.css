@@ -17,6 +17,8 @@
   height: 330px;
   width: 427px;
   padding: 23px;
+  display: block;
+  margin: 0 auto;
 }
 
 .btn-primary{
