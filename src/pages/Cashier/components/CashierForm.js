@@ -200,7 +200,7 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
                                 <div className="col-3">
                                     {"$" + new Intl.NumberFormat('es-CL').format(product.total)}
                                 </div>
-                                {!saleToUpdate && <div className="col-1">
+                                {<div className="col-1">
                                     <button type="button" className="btn btn-table btn-sm" onClick={()=>removeProduct(index)} disabled={!isRemoveButtonDisabled()}> <i className="fa-solid fa-xmark"></i></button>
                                 </div>}
                             </div>
