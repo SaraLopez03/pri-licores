@@ -20,7 +20,8 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
     const [totalSale, setTotalSale] = useState(saleToUpdate?.totalPrice ? saleToUpdate.totalPrice : 0);
     const [userName, setUserName] = useState(saleToUpdate?.userName ? saleToUpdate.userName : '');
     const [isLoading, setIsLoading] = useState(false);
-    let isFormDisabled = false;
+    const [errorMsg, setErrorMsg] = useState('');
+    const [showErrorModal, setShowErrorModal] = useState(false);
 
     useEffect(() => {
         getProducts();
@@ -107,6 +108,8 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
             setTotalSale(0);
         } catch (error) {
             setIsLoading(false);
+            setErrorMsg(error.response?.data?.code || 'Error al crear la venta');
+            setShowErrorModal(true);
         }
         
     }
@@ -125,6 +128,8 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
             buttonAction(response.data);
         } catch (error) {
             setIsLoading(false);
+            setErrorMsg(error.response?.data?.code || 'Error al actualizar la venta');
+            setShowErrorModal(true);
         }
         
     }
@@ -141,7 +146,30 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
         setTotalSale(sumSale);
     }
 
-    const isButtonDisabled = () => isFormDisabled || products.some(product => !product.productId || !product.amount)
+    const getProductAvailableAmount = (product) => {
+        if (!product || !product.productId) {
+            return null;
+        }
+        const inventoryProduct = currentProducts.find(currentProduct => currentProduct.productId === product.productId);
+        if (!inventoryProduct) {
+            return null;
+        }
+        const reservedAmount = productsToUpdate?.find(p => p.productId === product.productId)?.amount || 0;
+        return inventoryProduct.amount + reservedAmount;
+    }
+
+    const isAmountInvalid = (product) => {
+        if (!product || !product.amount) {
+            return false;
+        }
+        const availableAmount = getProductAvailableAmount(product);
+        if (availableAmount === null) {
+            return false;
+        }
+        return product.amount > availableAmount;
+    }
+
+    const isButtonDisabled = () => products.some(product => !product.productId || !product.amount || isAmountInvalid(product))
 
     const isRemoveButtonDisabled = () => products.length && (products.length - 1)
 
@@ -152,19 +180,6 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
             return <button type="button" className="btn btn-table btn-sm px-2 py-1" onClick={updateSale} disabled={isButtonDisabled()}> ACTUALIZAR </button>
         } else {
             return <button type="button" className="btn btn-table btn-sm px-2 py-1" onClick={sendProducts} disabled={isButtonDisabled()}> AGREGAR </button>
-        }
-    }
-
-    const isAmountValid = (product) => {
-        if (!product) {
-            return
-        }
-        const inventoryProduct = currentProducts.find(currentProduct => currentProduct.productId === product.productId);
-        if (inventoryProduct && product.amount > inventoryProduct.amount) {
-            isFormDisabled = true;
-            return true
-        } else {
-            return false
         }
     }
 
@@ -195,7 +210,7 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
                                     </select>
                                 </div>
                                 <div className="col-2">
-                                    <input type="number" className={`form-control ${isAmountValid(product) && 'invalid-input'}`} placeholder="0" value={product.amount} onChange={(e) => amountOnChange(e, index)}/>
+                                    <input type="number" className={`form-control ${isAmountInvalid(product) && 'invalid-input'}`} placeholder="0" value={product.amount} onChange={(e) => amountOnChange(e, index)}/>
                                 </div>
                                 <div className="col-3">
                                     {"$" + new Intl.NumberFormat('es-CL').format(product.total)}
@@ -222,7 +237,7 @@ const CashierForm = ({buttonAction, saleToUpdate, productsToUpdate}) => {
                     {buttonContent()}
                 </div>
             </div>
-            <ErrorModal></ErrorModal>
+            <ErrorModal message={errorMsg} showErrorModal={showErrorModal} closeModal={() => setShowErrorModal(false)}></ErrorModal>
         </div>
     )
 }
