@@ -12,19 +12,23 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
     const[paymentMethodId, setPaymentMethodId] = useState(0);
     const[totalPrice, setTotalPrice] = useState(0);
     const[valueReceibed, setValueReceibed] = useState(0);
+    const[discount, setDiscount] = useState(0);
     const[loading, setLoading] = useState(false);
     const[errorMsg, setErrorMsg] = useState('');
 
+    const MAX_DISCOUNT = 30;
 
     const paySale = sale => {
         setTotalPrice(sale.totalPrice)
         setSaleId(sale.saleId)
+        setDiscount(0)
         setPaySaleModal(true)
     }
 
     const closePaySale = () => {
         setErrorMsg('');
         setValueReceibed(0);
+        setDiscount(0);
         setPaySaleModal(false)
     }
 
@@ -42,11 +46,24 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
         // setValueReceibed(value === "" ? 0 : parseInt(value))
     }
 
+    const discountOnChange = (event) => {
+        const value = event.target.value;
+        if (value === "") {
+            setDiscount(0)
+        } else {
+            setDiscount(parseFloat(value))
+        }
+    }
+
+    const discountedTotal = () => {
+        return totalPrice - (totalPrice * discount / 100);
+    }
 
     const payFinish = async () => {
         let sale = {
             saleId: saleId,
-            paymentMethodId: paymentMethodId
+            paymentMethodId: paymentMethodId,
+            discount: discount
         }
         const token = getToken();
         try {
@@ -56,6 +73,7 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
             setPaySaleModal(false);
             setLoading(false);
             setValueReceibed(0);
+            setDiscount(0);
         } catch (error) {
             setLoading(false);
             setErrorMsg(error.response.data.code);
@@ -66,16 +84,20 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
         if(valueReceibed === 0) {
             return 0;
         } else {
-            return valueReceibed - totalPrice;
+            return valueReceibed - discountedTotal();
         }
     }
+
+    const isDiscountInvalid = () => discount < 0 || discount > MAX_DISCOUNT;
 
     const isButtonDisabled = () =>{
         if (errorMsg) {
             return true;
+        } else if(isDiscountInvalid()){
+            return true;
         } else if(paymentMethodId === 1){
             return false;
-        } else if(valueReceibed < totalPrice){
+        } else if(valueReceibed < discountedTotal()){
             return true;
         } else{
             return false;
@@ -130,7 +152,7 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
                 <ModalBody>
                     <div className="row justify-content-center text-center mb-4">
                         <span className="fw-bold">TOTAL</span>
-                        <p className="mb-0 mt-1"> {"$" + new Intl.NumberFormat('es-CL').format(totalPrice)}</p>
+                        <p className="mb-0 mt-1"> {"$" + new Intl.NumberFormat('es-CL').format(discountedTotal())}</p>
                     </div>
                     <div className="row justify-content-center">
                         <div className="col-md-4 fw-bold">
@@ -143,6 +165,17 @@ const CashierOpenSales = ({sales, itemClick, paySaleParent, isLoading}) => {
                             </select>
                         </div>
                     </div>
+                    <div className="row mt-4 justify-content-center">
+                        <div className="col-md-4 fw-bold">
+                            <p className="mb-0"> Descuento (%) </p>
+                        </div>
+                        <div className="col-md-5">
+                            <input type="number" min="0" max={MAX_DISCOUNT} className={`form-control ${isDiscountInvalid() && 'invalid-input'}`} value={discount === 0 ? "" : discount} onChange={discountOnChange} />
+                        </div>
+                    </div>
+                    {isDiscountInvalid() && <div className="row mt-3 justify-content-center">
+                        <p className="error-msg mb-0"> El descuento máximo permitido es {MAX_DISCOUNT}% </p>
+                    </div>}
                     { paymentMethodId === 0 && <div className="row mt-4 justify-content-center">
                         <div className="col-md-4 fw-bold">
                             <p className="mb-0"> Valor recibido </p>
